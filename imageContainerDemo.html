@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Google Images test</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+  <style>
+  ul{
+    position: relative;
+    overflow: visible;
+    list-style: none;
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    display: block;
+  }
+  li{
+    top: 0px;
+    position: relative;
+    border-color: #333;
+    width: 300px;
+    padding-bottom: 11.6%;
+
+    float: left;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: 20px;
+  }
+  js-googleImage-ImageContainer-list-element-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 100%;
+
+  }
+  .js-googleImage-ImageContainer-list-element-container .js-googleImage-ImageContainer-button{
+    line-height: 16px;
+  }
+  .js-googleImage-ImageContainer-list-element-container .js-googleImage-ImageContainer-button {
+    color: #ccc;
+    top: 5px;
+    right: 5px;
+    background-color: #FFF;
+    line-height: 21px;
+  }
+  .js-googleImage-ImageContainer-button,
+  .js-googleImage-ImageContainer-button:visited,
+  .js-googleImage-ImageContainer-button:focus {
+    width: 15px;
+    height: 16px;
+    font-size: 20px;
+    line-height: 16px;
+
+    float: right;
+    display: block;
+    position: relative;
+    position: absolute;
+    top: 0px;
+    z-index: 20;
+  }
+  .js-googleImage-ImageContainer-button:before {
+    content: "\00D7";
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    top: 0px;
+    position: absolute;
+  }
+  #over-container{
+    min-height: 140px;
+    margin-top: 20px;
+    position: relative;
+  }
+  #container{
+    position: relative;
+    z-index: 1;
+  }
+  </style>
+</head>
+<body>
+  <div id="over-container"><div id="container"></div></div>
+
+
+  <!-- In production you should use a CDN probably-->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="src/imageContainer.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $("#container").imageContainer({
+      defaultWidth: 300,
+      defaultHeight: 150
+    });
+    var addImageCurry = function(imageUrl){
+      return function(){
+        $("#container").imageContainer('addImage', {url: imageUrl});
+      }
+    }
+    var img1 = "http://hdwallpaperszon.in/wp-content/uploads/2013/10/Sports-Car-Wallpapers-1.jpg";
+    var img2 = "http://wac.450f.edgecastcdn.net/80450F/screencrush.com/files/2013/10/cars-3.jpg";
+    var img3 = "http://i.dailymail.co.uk/i/pix/2013/10/02/article-2441512-02650200000005DC-411_634x380.jpg";
+
+    addImageCurry(img1)();
+    addImageCurry(img2)();
+    addImageCurry(img3)();
+
+    setTimeout(addImageCurry(img3), 12000);
+    setTimeout(addImageCurry(img3), 14000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "googleImages",
+  "version": "0.0.0",
+  "authors": [
+    "Santiago Basulto <santiago.basulto@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "1.11.1",
+    "jquery-ui": "1.11.0"
+  },
+  "devDependencies": {
+        "jasmine-jquery": "*"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
