@@ -42,6 +42,80 @@ describe('A spec for the Image Container', function () {
     expect(el.imageContainer('currentImages')[0].url).toEqual('test.jpg');
   });
 
+  it('should trigger an event when an image is added', function(){
+    var imageAdded = false;
+    var eventData = null;
+    var el = $('#container').imageContainer({
+      'image-added': function(evt, data){
+        imageAdded = true;
+        eventData = data;
+      }
+    });
+
+    el.imageContainer('addImage', {
+        url: "test1.jpg"
+    });
+    expect(imageAdded).toBe(true);
+    expect(eventData).toEqual({
+      images: [{url: "test1.jpg"}],
+      currentImageAdded: {url: "test1.jpg"}
+    });
+  });
+
+  it('should trigger an event when an image is removed', function(){
+    var imageRemoved = false;
+    var eventData = null;
+    var el = $('#container').imageContainer({
+      'image-removed': function(evt, data){
+        imageRemoved = true;
+        eventData = data;
+      }
+    });
+
+    el.imageContainer('addImage', {
+        url: "test1.jpg"
+    });
+    el.imageContainer('addImage', {
+        url: "test2.jpg"
+    });
+
+    el.imageContainer('removeImage', {
+        url: "test2.jpg"
+    });
+
+    expect(imageRemoved).toBe(true);
+    expect(eventData).toEqual({
+      images: [{url: "test1.jpg"}],
+      currentImageRemoved: {url: "test2.jpg"}
+    });
+  });
+
+  it('should respect the limit for the image list', function(){
+    var limitReached = false;
+    var el = $('#container').imageContainer({
+      limit: 1,
+      'limit-reached': function(){
+        limitReached = true;
+      }
+    });
+
+    el.imageContainer('addImage', {
+        url: "test1.jpg"
+    });
+
+    expect(el.imageContainer('currentImages').length).toEqual(1);
+    expect(el.imageContainer('currentImages')[0].url).toEqual('test1.jpg');
+
+    el.imageContainer('addImage', {
+        url: "test2.jpg"
+    });
+
+    expect(el.imageContainer('currentImages').length).toEqual(1);
+    expect(el.imageContainer('currentImages')[0].url).toEqual('test1.jpg');
+
+    expect(limitReached).toBe(true);
+  });
+
   it('should remove the proper image from the image list', function(){
     var el = $('#container').imageContainer();
 

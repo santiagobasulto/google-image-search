@@ -11,6 +11,7 @@
         options: {
             defaultWidth: null,
             defaultHeight: null,
+            limit: null,
 
             defaultListContainer: "<ul></ul>",
             defaultListContainerSelector: "ul",
@@ -29,7 +30,8 @@
             defaultButtonClass: "js-googleImage-ImageContainer-button",
 
             defaultEventNameForImageAdded: 'image-added',
-            defaultEventNameForImageRemoved: 'image-removed'
+            defaultEventNameForImageRemoved: 'image-removed',
+            defaultEventNameForLimitReached: 'limit-reached'
         },
 
         _create: function () {
@@ -114,11 +116,18 @@
             return this._images;
         },
         addImage: function(image){
+            if(this.options.limit && this._images.length >= this.options.limit){
+                this._trigger(
+                  this.options.defaultEventNameForLimitReached,
+                  null, {images: this.currentImages()}
+                );
+                return null;
+            }
             this._images.push(image);
-            this._trigger(
-              this.options.defaultEventNameForImageAdded,
-              null, this.currentImages()
-            );
+            this._trigger(this.options.defaultEventNameForImageAdded, null, {
+                images: this.currentImages(),
+                currentImageAdded: image
+            });
             this._renderImages();
         },
         _getImageIndex: function(imageUrl){
@@ -136,10 +145,10 @@
             var index = this._getImageIndex(url);
             if(index !== null){
                 this._images.splice(index, 1);
-                this._trigger(
-                  this.options.defaultEventNameForImageRemoved,
-                  null, this.currentImages()
-                );
+                this._trigger(this.options.defaultEventNameForImageRemoved, null, {
+                  images: this.currentImages(),
+                  currentImageRemoved: image
+                });
                 this._renderImages();
             }
         },

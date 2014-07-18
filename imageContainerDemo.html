@@ -99,7 +99,17 @@
   <script type="text/javascript" charset="utf-8">
     $("#container").imageContainer({
       defaultWidth: 300,
-      defaultHeight: 150
+      defaultHeight: 150,
+      limit: 4,
+      'limit-reached': function(evt, data){
+        console.log("Limit reached")
+      },
+      'image-added': function(evt, data){
+        console.log("Image added");
+      },
+      'image-removed': function(evt, data){
+        console.log("Image removed");
+      }
     });
     var addImageCurry = function(imageUrl){
       return function(){
