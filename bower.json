@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery": "1.11.1",
+    "jquery": ">=1.6",
     "jquery-ui": "1.11.0"
   },
   "devDependencies": {

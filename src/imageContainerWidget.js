@@ -1,11 +1,64 @@
 /*!
- * jQuery UI Widget - Image Container. Holds images in a DOM element.
- * Author: @santiagobasulto
- * Licensed under the MIT license
+ * A jquery-ui widget that serves as a container for images. It has
+ * a simple API which allows you to add, remove and query the images contained
+ * in it.
+ *
+ * The public API has the following methods:
+ *
+ * addImage(image):
+ *   Adds an image to the container. If a limit was set and it hasn't been
+ *   reached the image is added and rendered.
+ *   If the image is successfully added the `defaultEventNameForImageAdded`
+ *   event is triggered.
+ *   If the limit was reached the `defaultEventNameForLimitReached` event
+ *   is triggered.
+ *
+ * removeImage(image):
+ *   Remove an image from the container. If the image is present
+ *   the defaultEventNameForImageRemoved event is triggered.
+ *
+ * currentImages():
+ *   Returns the images contained by the widget.
+ *
+ * The image object:
+ * As you've noticed, the `addImage` and `removeImage` methods both receive
+ * an `image` object. The object must have an interface similar to:
+ * var image = {
+ *   url: The URL of the image,
+ *   width: OPTIONAL. The width of the image.
+ *   height: OPTIONAL. The height of the image.
+ * }
+ *
+ * Events examples:
+ *  $("#container").imageContainer({
+ *    limit: 4,
+ *     // options.defaultEventNameForImageAdded
+ *    'limit-reached': function(evt, data){
+ *      console.log(data.images) // All the images contained
+ *    },
+ *     // options.defaultEventNameForImageAdded
+ *    'image-added': function(evt, data){
+ *      console.log(data.images) // All the images contained
+ *      console.log(data.currentImageAdded) // The image added
+ *    },
+ *     // options.defaultEventNameForImageRemoved
+ *    'image-removed': function(evt, data){
+ *      console.log(data.images) // All the images contained
+ *      console.log(data.currentImageRemoved) // The image added
+ *    }
+ *  });
+ *
+ * Usage Example:
+ *
+ * $("#container").imageContainer({});
+ * $("#container").imageContainer('addImage', {url: '#'});
+ * $("#container").imageContainer('removeImage', {url: '#'});
+ * console.log($("#container").imageContainer('currentImages'));
+ *
  */
 
 ;(function ( $, window, document, undefined ) {
-    $.widget("googleImages.imageContainer" , {
+    $.widget("salesboard.imageContainer" , {
 
         //Options to be used as defaults
         options: {
@@ -38,14 +91,14 @@
             this._images = [];
             this._initElements();
         },
-        primeElementIsList: function(){
+        _primeElementIsList: function(){
             return (
                 this.element.prop('tagName') ===
                 $(this.options.defaultListContainer).prop('tagName')
             );
         },
         _initElements: function(){
-            if(!this.primeElementIsList()){
+            if(!this._primeElementIsList()){
                 var listContainerElement = $(this.options.defaultListContainer);
                 listContainerElement.addClass(this.options.defaultListContainerClass);
 
@@ -56,10 +109,10 @@
                 this.listContainer = this.element;
             }
         },
-        closeButtonClickedClosure: function(self){
-            // this is the a element
-            // $this is the a element wrapped in a jquery obj
-            // self is the widget object
+        _closeButtonClickedClosure: function(self){
+            // `this` is the `a` tag
+            // `$this` is the `a` tag wrapped in a jquery obj
+            // `self` is the widget object
             return function(evt){
                 $this = $(this);
                 var containerEl = $this.parent(self.options.defaultListElementContainerSelector);
@@ -78,7 +131,7 @@
             ).append(
               $('<span></span>')
             ).on(
-              'click', this.closeButtonClickedClosure(this)
+              'click', this._closeButtonClickedClosure(this)
             ).appendTo(divEl);
 
             var imgElement = $("<img></img>").attr(
@@ -117,6 +170,7 @@
         },
         addImage: function(image){
             if(this.options.limit && this._images.length >= this.options.limit){
+                // Limit reached. Shouldn't add the image.
                 this._trigger(
                   this.options.defaultEventNameForLimitReached,
                   null, {images: this.currentImages()}
@@ -152,37 +206,8 @@
                 this._renderImages();
             }
         },
-
-        // Destroy an instantiated plugin and clean up
-        // modifications the widget has made to the DOM
-        destroy: function () {
-
-            // this.element.removeStuff();
-            // For UI 1.8, destroy must be invoked from the
-            // base widget
-            $.Widget.prototype.destroy.call(this);
-            // For UI 1.9, define _destroy instead and don't
-            // worry about
-            // calling the base widget
+        _destroy: function () {
+            this.element.empty();
         }
-
-        // // Respond to any changes the user makes to the
-        // // option method
-        // _setOption: function ( key, value ) {
-        //     switch (key) {
-        //     case "someValue":
-        //         //this.options.someValue = doSomethingWith( value );
-        //         break;
-        //     default:
-        //         //this.options[ key ] = value;
-        //         break;
-        //     }
-        //
-        //     // For UI 1.8, _setOption must be manually invoked
-        //     // from the base widget
-        //     $.Widget.prototype._setOption.apply( this, arguments );
-        //     // For UI 1.9 the _super method can be used instead
-        //     // this._super( "_setOption", key, value );
-        // }
     });
 })( jQuery, window, document );

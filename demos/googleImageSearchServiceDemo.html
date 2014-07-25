@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Google Images test</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+</head>
+<body>
+  <button id="requestImagesCTA">Request image</button>
+  <h1>Results<h1>
+  <ul id="results"></ul>
+
+  <!-- In production you should use a CDN probably-->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+
+  <!-- The code of the widget -->
+  <script src="../src/googleImageSearchService.js"></script>
+
+  <!-- Demo Specific -->
+  <script src="js/credentials.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+    var results = $("#results");
+    var factory = getGoogleFactory();
+
+    service = factory.getGoogleSearchService({
+      apiKey: API_KEY,
+      resultCount: 2,
+      cx: CX
+    });
+
+
+    var it = service.search("Samsung S3");
+
+    $("#requestImagesCTA").on('click', function(){
+      var elem = it.next();
+      var li = $("<li></li>").appendTo(results);
+      var img = $("<img></img>")
+        .attr('src', elem.image.thumbnailLink)
+        .appendTo(li);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Google Images test</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/imageCarousel.css">
+  <link rel="stylesheet" href="css/imageContainer.css">
+  <style type="text/css" media="screen">
+  #manual-input{
+    margin: 20px 0px;
+  }
+  </style>
+</head>
+<body>
+  <div id="over-image-container" style="border 1px red solid;"><div id="image-container"></div></div>
+  <div style="clear: both; margin: 20px 0px;"></div>
+  <div id="carousel-container" class='gif-group' style="border 1px red solid;"></div>
+
+  <form action="" id="manual-input">
+    <input type="text" name='image-url'>
+    <input type="submit" name="image-btn" value="Add image">
+  </form>
+
+  <!-- In production you should use a CDN probably-->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+
+  <script src="../src/imageContainerWidget.js"></script>
+  <script src="../src/googleImageSearchService.js"></script>
+  <script src="../src/imageCarouselWidget.js"></script>
+
+  <script src="js/credentials.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+  var imageContainer = $("#image-container");
+  imageContainer.imageContainer({
+    limit: 3,
+    'limit-reached': function(evt, data){
+      //console.log("Limit reached")
+    },
+    'image-added': function(evt, data){
+      //console.log("Image added");
+    },
+    'image-removed': function(evt, data){
+      //console.log("Image removed");
+    }
+  });
+
+    var factory = getGoogleFactory();
+    service = factory.getGoogleSearchService({
+      apiKey: API_KEY,
+      cx: CX
+    });
+    var it = service.search("Samsung S3");
+    var oldNext = it.next;
+    it.next = function(){
+      var el = oldNext();
+      el.url = el.image.thumbnailLink;
+      return el;
+    };
+
+    $("#carousel-container").imageCarouselWidget({
+      defaultImageIterator: it,
+      defaultNavClass: "gif-nav",
+      defaultPrevNavClass: "gif-nav-prev",
+      defaultNextNavClass: "gif-nav-next",
+      'image-clicked': function(evt, data){
+        imageContainer.imageContainer('addImage', {
+          url: data.image.url,
+          width: data.image.image.thumbnailWidth,
+          height: data.image.image.thumbnailHeight
+        });
+      }
+    });
+    $("#manual-input").on('submit', function(evt){
+      evt.preventDefault();
+      var imageUrl = $(this).find("input[name='image-url']").val();
+      imageContainer.imageContainer('addImage', {url: imageUrl});
+    });
+  </script>
+</body>
+</html>

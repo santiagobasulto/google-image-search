@@ -21,16 +21,6 @@ describe('A spec for the Image Container', function () {
     expect(el.imageContainer('currentImages')).toEqual([]);
   });
 
-  it('should return false when initialized with a div', function() {
-    var el = $('<div></div>').imageContainer();
-    expect(el.imageContainer('primeElementIsList')).toBe(false);
-  });
-
-  it('should return true when initialized with a ul', function() {
-    var el = $('<ul></ul>').imageContainer();
-    expect(el.imageContainer('primeElementIsList')).toBe(true);
-  });
-
   it('should add the proper image to the image list', function(){
     var el = $('#container').imageContainer();
 

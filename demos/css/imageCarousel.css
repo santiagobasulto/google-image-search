@@ -1,0 +1,53 @@
+.gif-group{
+  width: 600px;
+}
+.js-image-carousel-widget-results-container{
+  text-align: center;
+}
+.result {
+  display: inline-block;
+}
+.result img {
+  border: 1px solid #CCC;
+  margin: 0px 3px;
+  /*vertical-align: top;*/
+  opacity: 0.4;
+}
+.result img:hover {
+  opacity: 1;
+}
+.result img.selected {
+  opacity: 1;
+  border: 5px solid #3c8dbc;
+}
+/*NEW*/
+.gif-nav {
+  width: 100%;
+  position: relative;
+  top: -90px;
+}
+.gif-nav .gif-nav-prev, .gif-nav .gif-nav-next {
+  -webkit-transition: none;
+  transition: none;
+  left: auto;
+  z-index: 2;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  background: url(../images/navs.png);
+}
+.gif-nav .gif-nav-prev {
+  background-position: 0 0;
+  left: 0;
+}
+.gif-nav .gif-nav-next {
+  background-position: -36px 0;
+  right: 0;
+}
+.gif-nav .gif-nav-prev:hover {
+  background-position: 0 -36px;
+}
+.gif-nav .gif-nav-next:hover {
+  background-position: -36px -36px;
+}

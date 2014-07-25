@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Image Carousel demo</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/imageCarousel.css">
+</head>
+<body>
+  <div id="container" class='gif-group' data-query="Samsung s3"></div>
+
+  <!-- In production you should use a CDN probably-->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+
+  <script src="../src/imageCarouselWidget.js"></script>
+  <script type="text/javascript" charset="utf-8">
+
+    // This is a mock. Look up the images you want and place them here.
+    var counter = 0;
+    var it = {
+      next: function(){
+        var images = [
+          "http://www.gothamdreamcars.com/assets/home-exotic-car-rental-2ccbf15de18e5b28c2e591d53d09bc2f.jpg",
+          "http://www.aloharentacar.com/maui_rental_photos/bluenissan.jpg",
+          "http://c2c.sulekhalive.com/cars/images/variants/fiat/fiat-bravo/thumbnail/fiat-bravo-2010-10-6-7-3-17.jpg",
+          "http://www.123gifs.eu/free-gifs/cars/auto-0706.gif"
+        ];
+        return {
+          url: images[(counter++) % 3]
+        }
+      }
+    };
+
+    $("#container").imageCarouselWidget({
+      defaultWidth: 150,
+      defaultImageIterator: it,
+      defaultNavClass: "gif-nav",
+      defaultPrevNavClass: "gif-nav-prev",
+      defaultNextNavClass: "gif-nav-next",
+      'image-clicked': function(evt, data){
+        console.log(arguments);
+      }
+    });
+  </script>
+</body>
+</html>

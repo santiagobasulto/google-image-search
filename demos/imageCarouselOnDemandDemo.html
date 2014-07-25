@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Google Images test</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/imageCarousel.css">
+</head>
+<body>
+  <div>
+    <form id="search-form" action="">
+      <input type="text" name="query">
+      <input type="submit" name='search-cta' value="Search!">
+    </form>
+  </div>
+  <div style="clear: both; margin: 20px 0px;"></div>
+  <div id="container" class='gif-group' data-query="Samsung s3"></div>
+
+  <!-- In production you should use a CDN probably-->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+
+  <script src="../src/googleImageSearchService.js"></script>
+  <script src="../src/imageCarouselWidget.js"></script>
+
+  <script src="js/credentials.js"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+    var factory = getGoogleFactory();
+
+    service = factory.getGoogleSearchService({
+      apiKey: API_KEY,
+      cx: CX
+    });
+
+    $("#container").imageCarouselWidget({
+      defaultNavClass: "gif-nav",
+      defaultPrevNavClass: "gif-nav-prev",
+      defaultNextNavClass: "gif-nav-next",
+      fetchOnCreation: false,
+      'image-clicked': function(evt, data){
+        console.log(arguments);
+      }
+    });
+    $("#search-form").on('submit', function(e){
+      e.preventDefault();
+      var q = $("input[name='query']").val();
+      var it = service.search(q);
+      var oldNext = it.next;
+      it.next = function(){
+        var el = oldNext();
+        el.url = el.image.thumbnailLink;
+        el.width = el.image.thumbnailWidth;
+        el.height = el.image.thumbnailHeight;
+        return el;
+      };
+
+      $("#container").imageCarouselWidget('resetIterator', it);
+    });
+  </script>
+</body>
+</html>

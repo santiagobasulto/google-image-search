@@ -1,0 +1,74 @@
+ul{
+  position: relative;
+  overflow: visible;
+  list-style: none;
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  display: block;
+}
+li{
+  top: 0px;
+  position: relative;
+  border-color: #333;
+  width: 300px;
+  padding-bottom: 11.6%;
+
+  float: left;
+  vertical-align: middle;
+  text-align: center;
+  margin-right: 20px;
+}
+.js-googleImage-ImageContainer-list-element-container{
+  display: inline-block;
+  /*
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 100%;
+  */
+
+}
+.js-googleImage-ImageContainer-list-element-container .js-googleImage-ImageContainer-button{
+  line-height: 16px;
+}
+.js-googleImage-ImageContainer-list-element-container .js-googleImage-ImageContainer-button {
+  color: #ccc;
+  top: 5px;
+  right: 5px;
+  background-color: #FFF;
+  line-height: 21px;
+}
+.js-googleImage-ImageContainer-button,
+.js-googleImage-ImageContainer-button:visited,
+.js-googleImage-ImageContainer-button:focus {
+  width: 15px;
+  height: 16px;
+  font-size: 20px;
+  line-height: 16px;
+
+  float: right;
+  display: block;
+  position: relative;
+  top: 0px;
+  z-index: 20;
+}
+.js-googleImage-ImageContainer-button:before {
+  content: "\00D7";
+}
+
+#over-image-container{
+  min-height: 140px;
+  margin-top: 20px;
+  position: relative;
+}
+#image-container{
+  position: relative;
+  z-index: 1;
+}

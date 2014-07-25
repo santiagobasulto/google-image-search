@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Images Container demo</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/imageContainer.css">
+</head>
+<body>
+  <div id="over-container"><div id="container"></div></div>
+
+
+  <!-- In production you should use a CDN probably-->
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="../src/imageContainerWidget.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    $("#container").imageContainer({
+      defaultWidth: 300,
+      defaultHeight: 150,
+      limit: 4,
+      'limit-reached': function(evt, data){
+        console.log("Limit reached")
+      },
+      'image-added': function(evt, data){
+        console.log("Image added");
+      },
+      'image-removed': function(evt, data){
+        console.log("Image removed");
+      }
+    });
+    var addImageCurry = function(imageUrl){
+      return function(){
+        $("#container").imageContainer('addImage', {url: imageUrl});
+      }
+    }
+    var img1 = "http://hdwallpaperszon.in/wp-content/uploads/2013/10/Sports-Car-Wallpapers-1.jpg";
+    var img2 = "http://wac.450f.edgecastcdn.net/80450F/screencrush.com/files/2013/10/cars-3.jpg";
+    var img3 = "http://i.dailymail.co.uk/i/pix/2013/10/02/article-2441512-02650200000005DC-411_634x380.jpg";
+
+    addImageCurry(img1)();
+    addImageCurry(img2)();
+    addImageCurry(img3)();
+
+    setTimeout(addImageCurry(img3), 12000);
+    setTimeout(addImageCurry(img3), 14000);
+  </script>
+</body>
+</html>
