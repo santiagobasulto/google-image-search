@@ -10,7 +10,7 @@
     "web": "http://www.santiagobasulto.com.ar"
   },
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "jquery": ">=1.6",
     "jquery-ui": "1.11.0"
