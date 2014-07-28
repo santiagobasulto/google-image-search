@@ -50,37 +50,37 @@
     }
   });
 
-    var factory = getGoogleFactory();
-    service = factory.getGoogleSearchService({
-      apiKey: API_KEY,
-      cx: CX
-    });
-    var it = service.search("Samsung S3");
-    var oldNext = it.next;
-    it.next = function(){
-      var el = oldNext();
-      el.url = el.image.thumbnailLink;
-      return el;
-    };
+  var factory = getGoogleFactory();
+  service = factory.getGoogleSearchService({
+    apiKey: API_KEY,
+    cx: CX
+  });
+  var it = service.search("Samsung S3");
+  var oldNext = it.next;
+  it.next = function(){
+    var el = oldNext();
+    el.url = el.image.thumbnailLink;
+    return el;
+  };
 
-    $("#carousel-container").imageCarouselWidget({
-      defaultImageIterator: it,
-      defaultNavClass: "gif-nav",
-      defaultPrevNavClass: "gif-nav-prev",
-      defaultNextNavClass: "gif-nav-next",
-      'image-clicked': function(evt, data){
-        imageContainer.imageContainer('addImage', {
-          url: data.image.url,
-          width: data.image.image.thumbnailWidth,
-          height: data.image.image.thumbnailHeight
-        });
-      }
-    });
-    $("#manual-input").on('submit', function(evt){
-      evt.preventDefault();
-      var imageUrl = $(this).find("input[name='image-url']").val();
-      imageContainer.imageContainer('addImage', {url: imageUrl});
-    });
+  $("#carousel-container").imageCarouselWidget({
+    defaultImageIterator: it,
+    defaultNavClass: "gif-nav",
+    defaultPrevNavClass: "gif-nav-prev",
+    defaultNextNavClass: "gif-nav-next",
+    'image-clicked': function(evt, data){
+      imageContainer.imageContainer('addImage', {
+        url: data.image.url,
+        width: data.image.image.thumbnailWidth,
+        height: data.image.image.thumbnailHeight
+      });
+    }
+  });
+  $("#manual-input").on('submit', function(evt){
+    evt.preventDefault();
+    var imageUrl = $(this).find("input[name='image-url']").val();
+    imageContainer.imageContainer('addImage', {url: imageUrl});
+  });
   </script>
 </body>
 </html>
