@@ -1,9 +1,14 @@
 {
-  "name": "googleImages",
-  "version": "0.0.0",
+  "name": "google-image-search-widget",
+  "version": "0.1.0",
+  "description": "Simple jquery-ui widget to add Google Image Search to your website",
   "authors": [
     "Santiago Basulto <santiago.basulto@gmail.com>"
   ],
+  "author": {
+    "name": "Santiago Basulto",
+    "web": "http://www.santiagobasulto.com.ar"
+  },
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -11,13 +16,20 @@
     "jquery-ui": "1.11.0"
   },
   "devDependencies": {
-        "jasmine-jquery": "*"
+    "jasmine-jquery": "*"
   },
   "ignore": [
     "**/.*",
+    "**/*~",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "spec"
+  ],
+  "keywords": [
+    "jquery-ui",
+    "images",
+    "search"
   ]
 }

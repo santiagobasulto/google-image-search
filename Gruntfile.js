@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-
+  'use strict';
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jasmine : {
@@ -15,25 +15,28 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
+        banner: '<%= banner %>\n',
+        stripBanners: false,
         separator: ';'
       },
       dist: {
-        src: ['src/*.js'],
+        src: [
+          'src/googleImageSearchService.js',
+          'src/imageCarouselWidget.js',
+          'src/imageContainerWidget.js'
+        ],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       dist: {
         files: {
           'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
         }
       }
-    },
-    qunit: {
-      files: ['test/**/*.html']
     },
     jshint: {
       files: ['Gruntfile.js', 'src/*.js', 'spec/**/*.js'],
@@ -49,18 +52,18 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
+      tasks: ['jshint', 'jasmine']
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
 
   grunt.registerTask('test', ['jshint', 'jasmine']);
 
-  //grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'jasmine', 'concat', 'uglify']);
 
 };
