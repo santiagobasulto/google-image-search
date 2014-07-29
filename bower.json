@@ -5,6 +5,7 @@
   "authors": [
     "Santiago Basulto <santiago.basulto@gmail.com>"
   ],
+  "main": "dist/googleImageSearchWidget.js",
   "author": {
     "name": "Santiago Basulto",
     "web": "http://www.santiagobasulto.com.ar"
