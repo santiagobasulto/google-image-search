@@ -1,6 +1,6 @@
 {
   "name": "google-image-search-widget",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple jquery-ui widget to add Google Image Search to your website",
   "authors": [
     "Santiago Basulto <santiago.basulto@gmail.com>"
